@@ -1,0 +1,3 @@
+[submodule "core/qr-generator"]
+	path = core/qr-generator
+	url = https://github.com/disruptorh/QR-Generator

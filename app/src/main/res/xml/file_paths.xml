@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <!-- The share sheet is the only reader of the exported file, and the grant
+         lasts only as long as the intent that asked for it. -->
+    <cache-path
+        name="shared"
+        path="shared/" />
+</paths>
