@@ -42,6 +42,15 @@ gh auth status >/dev/null 2>&1 || die "gh is not authenticated; run 'gh auth log
 [ -z "$(git status --porcelain)" ] || die "working tree is not clean; commit or stash your changes first"
 [ -x "$JAVA_HOME/bin/java" ] || die "JDK not found at JAVA_HOME=$JAVA_HOME"
 
+# Release signing material. keystore.properties is optional (without it the build
+# falls back to the debug key), but when it is present the keystore must exist or
+# Gradle fails halfway through the release.
+if [ -f keystore.properties ]; then
+    STORE_FILE="$(sed -nE 's/^[[:space:]]*storeFile[[:space:]]*=[[:space:]]*//p' keystore.properties | head -1)"
+    [ -n "$STORE_FILE" ] || die "storeFile missing from keystore.properties"
+    [ -f "$STORE_FILE" ] || die "keystore '$STORE_FILE' from keystore.properties not found"
+fi
+
 
 # ---------------------------------------------------------------------------
 # Current version: the higher of the version file and the last release tag, so a
